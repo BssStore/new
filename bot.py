@@ -1,4 +1,4 @@
-import socket, threading, time, random, cloudscraper, requests
+import socket, threading, time, random, requests
 import os
 import shutil
 import sys
