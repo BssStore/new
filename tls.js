@@ -13,9 +13,9 @@ tls.DEFAULT_ECDH_CURVE;
 let payload = {};
 
 try {
-var proxies = fs.readFileSync("proxies.txt", 'utf-8').toString().replace(/\r/g, '').split('\n');
+var proxies = fs.readFileSync("new/proxies.txt", 'utf-8').toString().replace(/\r/g, '').split('\n');
 } catch(error){
-console.log('Proxy file no found, "proxies.txt".');
+console.log('Proxy file no found, "new/proxies.txt".');
 process.exit();
 }
 
@@ -41,9 +41,9 @@ const sigalgs = [
  let SignalsList = sigalgs.join(':');
 
  try {
-var UAs = fs.readFileSync('ua.txt', 'utf-8').replace(/\r/g, '').split('\n');
+var UAs = fs.readFileSync('new/ua.txt', 'utf-8').replace(/\r/g, '').split('\n');
  } catch(error){
-     console.log('Fail to load ua.txt')
+     console.log('Fail to load new/ua.txt')
  }
 class TlsBuilder {
     constructor (socket){
