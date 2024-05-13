@@ -133,7 +133,7 @@ def attack_tcp_bypass(ip, port, end_time, size):
 
 
 def attack_httpraw(url, end_time):
-    os.system(f'node HTTP-RAW.js {url} {end_time}')
+    os.system(f'node new/HTTP-RAW.js {url} {end_time}')
 
 
 
