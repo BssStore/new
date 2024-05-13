@@ -205,7 +205,7 @@ def main():
                     port = int(args[2])
                     duration = int(args[3])
                     end_time = time.time() + duration
-                    size = 1024
+                    size = 65500
                     threads = 20
 
                     for _ in range(threads):
